@@ -32,12 +32,12 @@ These are current definitions available to use...
 //////////////////////////////////////////////////////////////////////////////////////
 // Game Config
 //////////////////////////////////////////////////////////////////////////////////////
-#define VSYNC_ENABLED					// Enable VSync
-#define ANTIALIASING_ENABLED			// Enable Antialiasing
-#define ANTIALIASING_SAMPLES 4			// Set antialiasing samples (If antialiasing enabled)
-#define EXIT_WITH_ESCAPE				// Allows to exit game with escape key
-#define WINDOW_RESIZABLE				// Allows window to be resizable
-#define WINDOW_FULLSCREEN				// Launch game in fullscreen mode
+#define VSYNC_ENABLED                   // Enable VSync
+#define ANTIALIASING_ENABLED            // Enable Antialiasing
+#define ANTIALIASING_SAMPLES 4          // Set antialiasing samples (If antialiasing enabled)
+#define EXIT_WITH_ESCAPE                // Allows to exit game with escape key
+#define WINDOW_RESIZABLE                // Allows window to be resizable
+#define WINDOW_FULLSCREEN               // Launch game in fullscreen mode
 ```
 
 - You can also find "Game Properies" section in `main.c`
@@ -46,11 +46,11 @@ These are current definitions available to use...
 //////////////////////////////////////////////////////////////////////////////////////
 // Game Properties
 //////////////////////////////////////////////////////////////////////////////////////
-int window_width = 800;					// Game window width
-int window_height = 450;				// Game window height
-bool window_fullscreen = false;			// Game fullscreen?
-const char* window_title = "MYGAME";	// Game window title
-int game_fps = 60;						// Game frames per second
+int window_width = 800;                 // Game window width
+int window_height = 450;                // Game window height
+bool window_fullscreen = false;         // Game fullscreen?
+const char* window_title = "MYGAME";    // Game window title
+int game_fps = 60;                      // Game frames per second
 ```
 
 - In "Game Variables" section, You can write game variables used for game...
@@ -141,63 +141,63 @@ These are structs provided to make development easier...
 // Structs
 //////////////////////////////////////////////////////////////////////////////////////
 typedef struct joystick {
-	int index;							// Joystick index
-	const char* name;					// Joystick name
-	unsigned char* buttons;				// Joystick buttons
-	unsigned char* hats;				// Joystick hats
-	float* axes;						// Joystick analog axes
-	int* buttons_count;					// Number of joystick buttons joystick has
-	int* axes_count;					// Number of axes joystick has
-	int* hats_count;					// Number of hats joystick has
+    int index;                      // Joystick index
+    const char* name;               // Joystick name
+    unsigned char* buttons;         // Joystick buttons
+    unsigned char* hats;            // Joystick hats
+    float* axes;                    // Joystick analog axes
+    int* buttons_count;             // Number of joystick buttons joystick has
+    int* axes_count;                // Number of axes joystick has
+    int* hats_count;                // Number of hats joystick has
 } joystick;
 
 
 typedef struct rect {
-	float x;							// Rectangle x
-	float y;							// Rectangle y
-	float w;							// Rectangle width
-	float h;							// Rectangle height
+    float x;                        // Rectangle x
+    float y;                        // Rectangle y
+    float w;                        // Rectangle width
+    float h;                        // Rectangle height
 } rect;
 
 
 typedef struct spritefont {
-	char* src;							// Font source file
-	rect* chars;						// Font rectangles (For each letter in image)
+    char* src;                      // Font source file
+    rect* chars;                    // Font rectangles (For each letter in image)
 } spritefont;
 
 
 typedef struct color {
-	unsigned int r;						// Red (0 - 255)
-	unsigned int g;						// Green (0 - 255)
-	unsigned int b;						// Blue (0 - 255)
-	unsigned int a;						// Alpha (0 - 255)
+    unsigned int r;                 // Red (0 - 255)
+    unsigned int g;                 // Green (0 - 255)
+    unsigned int b;                 // Blue (0 - 255)
+    unsigned int a;                 // Alpha (0 - 255)
 } color;
 ```
 
 These are variables you can use around your game...
 
 ```c
-int window_widt;						// Game window width
-int window_height;						// Game window height
-bool window_fullscreen;					// Game fullscreen?
-const char* window_title;				// Game window title
-int game_fps;							// Game frames per second
-int error_code;							// Error code if game fails to do something
-char* error_description;				// Error descriotion if game fails to do something
-double dt;								// DeltaTime (Can be used, Useful...)
+int window_width;                                       // Game window width
+int window_height;                                      // Game window height
+bool window_fullscreen;                                 // Game fullscreen?
+const char* window_title;                               // Game window title
+int game_fps;                                           // Game frames per second
+int error_code;                                         // Error code if game fails to do something
+char* error_description;                                // Error descriotion if game fails to do something
+double dt;                                              // DeltaTime (Can be used, Useful...)
 
-int keyboard_keys[512];					// Array of keyboard keys if still pressed or down (Multiple keys control)
+int keyboard_keys[512];                                 // Array of keyboard keys if still pressed or down (Multiple keys control)
 
-int mouse_buttons[8];					// Array of mouse buttons with their states
-double mouse_x;							// Mouse X position
-double mouse_y;							// Mouse Y position
-double scroll_x;						// Mouse wheel delta X
-double scroll_y;						// Mouse wheel delta Y
+int mouse_buttons[8];                                   // Array of mouse buttons with their states
+double mouse_x;                                         // Mouse X position
+double mouse_y;                                         // Mouse Y position
+double scroll_x;                                        // Mouse wheel delta X
+double scroll_y;                                        // Mouse wheel delta Y
 
-joystick joysticks[16];					// Joysticks
+joystick joysticks[16];                                 // Joysticks
 
-const char** dropped_files;				// Array of dropped files paths (If file dropped to game window)
-int dropped_files_count;				// Dropped files count (Number of files dropped to game window)
+const char** dropped_files;                             // Array of dropped files paths (If file dropped to game window)
+int dropped_files_count;                                // Dropped files count (Number of files dropped to game window)
 ```
 
 ### Utilities
@@ -214,16 +214,16 @@ void set_audio_gain(float gain);
 void pause_audio(void);
 void resume_audio(void);
 
-int charcode(char ch);										// Converts char to int
+int charcode(char ch);                                          // Converts char to int
 void draw_texture(char* src, rect srcRec, rect dstRec, color tint);
 void draw_text(spritefont font, char* text, float x, float y, float size, color tint);
 
-void storage_init(void);									// Initializes storage if game.data not found...
+void storage_init(void);                                        // Initializes storage if game.data not found...
 void storage_save_string(char* string, unsigned int position);
-void storage_save_var(double var, unsigned int position);	// Same as previous one for numbers
+void storage_save_var(double var, unsigned int position);       // Same as previous one for numbers
 char* storage_load_string(unsigned int position);
-double storage_load_var(unsigned int position); 			// Same as previous one but for numbers
-void storage_remove_var(unsigned int position);				// Can remove variable from index (String or number allowed)
+double storage_load_var(unsigned int position);                 // Same as previous one but for numbers
+void storage_remove_var(unsigned int position);                 // Can remove variable from index (String or number allowed)
 void storage_clear(void);
 ```
 
