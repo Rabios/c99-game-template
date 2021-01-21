@@ -103,7 +103,8 @@ int window_height = 450;                // Game window height
 bool window_fullscreen = false;         // Game fullscreen?
 const char* window_title = "MYGAME";    // Game window title
 int game_fps = 60;                      // Game frames per second
-
+int error_code;                         // Error code if game failed to do something
+char* error_description;                // Error description if game failed to do something
 
 //////////////////////////////////////////////////////////////////////////////////////
 // Variables
