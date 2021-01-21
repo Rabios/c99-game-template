@@ -92,10 +92,10 @@ void update(int argc, char** argv) {
 // Input: Here you write input checking code
 //////////////////////////////////////////////////////////////////////////////////////
 void input(int argc, char** argv) {
-	if (keyboard_keys[GLFW_KEY_LEFT]) player_x -= 5;
-	if (keyboard_keys[GLFW_KEY_RIGHT]) player_x += 5;
-	if (keyboard_keys[GLFW_KEY_UP]) player_y -= 5;
-	if (keyboard_keys[GLFW_KEY_DOWN]) player_y += 5;
+    if (keyboard_keys[GLFW_KEY_LEFT]) player_x -= 5;
+    if (keyboard_keys[GLFW_KEY_RIGHT]) player_x += 5;
+    if (keyboard_keys[GLFW_KEY_UP]) player_y -= 5;
+    if (keyboard_keys[GLFW_KEY_DOWN]) player_y += 5;
 }
 ```
 
@@ -108,16 +108,16 @@ void input(int argc, char** argv) {
 // Rendering: Here you write OpenGL code
 //////////////////////////////////////////////////////////////////////////////////////
 void draw(int argc, char** argv) {
-	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
-	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-	glBegin(GL_QUADS);
-	glColor4ub(0, 0, 255, 255);
-	glVertex2i(player_x, player_y);
-	glVertex2i(player_x + player_width, player_y);
-	glVertex2i(player_x + player_width, player_y + player_height);
-	glVertex2i(player_x, player_y + player_height);
-	glEnd();
+    glBegin(GL_QUADS);
+    glColor4ub(0, 0, 255, 255);
+    glVertex2i(player_x, player_y);
+    glVertex2i(player_x + player_width, player_y);
+    glVertex2i(player_x + player_width, player_y + player_height);
+    glVertex2i(player_x, player_y + player_height);
+    glEnd();
 }
 ```
 
@@ -182,8 +182,8 @@ int window_height;                                      // Game window height
 bool window_fullscreen;                                 // Game fullscreen?
 const char* window_title;                               // Game window title
 int game_fps;                                           // Game frames per second
-int error_code;                                         // Error code if game fails to do something
-char* error_description;                                // Error descriotion if game fails to do something
+int error_code;                                         // Error code if game failed to do something
+char* error_description;                                // Error description if game failed to do something
 double dt;                                              // DeltaTime (Can be used, Useful...)
 
 int keyboard_keys[512];                                 // Array of keyboard keys if still pressed or down (Multiple keys control)
