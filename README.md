@@ -177,27 +177,27 @@ typedef struct color {
 These are variables you can use around your game...
 
 ```c
-int window_width;                                       // Game window width
-int window_height;                                      // Game window height
-bool window_fullscreen;                                 // Game fullscreen?
-const char* window_title;                               // Game window title
-int game_fps;                                           // Game frames per second
-int error_code;                                         // Error code if game failed to do something
-char* error_description;                                // Error description if game failed to do something
-double dt;                                              // DeltaTime (Can be used, Useful...)
+int window_width;                   // Game window width
+int window_height;                  // Game window height
+bool window_fullscreen;             // Game fullscreen?
+const char* window_title;           // Game window title
+int game_fps;                       // Game frames per second
+int error_code;                     // Error code if game failed to do something
+char* error_description;            // Error description if game failed to do something
+double dt;                          // DeltaTime (Can be used, Useful...)
 
-int keyboard_keys[512];                                 // Array of keyboard keys if still pressed or down (Multiple keys control)
+int keyboard_keys[512];             // Array of keyboard keys if still pressed or down (Multiple keys control)
 
-int mouse_buttons[8];                                   // Array of mouse buttons with their states
-double mouse_x;                                         // Mouse X position
-double mouse_y;                                         // Mouse Y position
-double scroll_x;                                        // Mouse wheel delta X
-double scroll_y;                                        // Mouse wheel delta Y
+int mouse_buttons[8];               // Array of mouse buttons with their states
+double mouse_x;                     // Mouse X position
+double mouse_y;                     // Mouse Y position
+double scroll_x;                    // Mouse wheel delta X
+double scroll_y;                    // Mouse wheel delta Y
 
-joystick joysticks[16];                                 // Joysticks
+joystick joysticks[16];             // Joysticks
 
-const char** dropped_files;                             // Array of dropped files paths (If file dropped to game window)
-int dropped_files_count;                                // Dropped files count (Number of files dropped to game window)
+const char** dropped_files;         // Array of dropped files paths (If file dropped to game window)
+int dropped_files_count;            // Dropped files count (Number of files dropped to game window)
 ```
 
 ### Utilities
