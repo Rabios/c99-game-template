@@ -18,7 +18,7 @@ It contains set of libraries can be used to develop games with great approach, A
 
 ### Building
 
-Clone this repo and build it with CMake.
+Clone this repo and build it with CMake, Then use C compiler of your choice (GCC, Visua Studio's MSVC, etc...)
 
 ### Usage
 
