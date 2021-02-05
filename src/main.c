@@ -1,6 +1,6 @@
 // Written by Rabia Alhaffar in 29/December/2020
 // C99 game template ready for game development...
-// Updated: 21/January/2021
+// Updated: 5/Feburary/2021
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -287,7 +287,7 @@ void start(int argc, char** argv) {
         gladLoadGL(glfwGetProcAddress);
 #else
         gladLoadGL();	    
-#end
+#endif
         printf("%s%s\n", "GAME: USED OPENGL ", glGetString(GL_VERSION));
         loop(argc, &argv);
     }
