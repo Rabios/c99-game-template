@@ -282,8 +282,12 @@ void start(int argc, char** argv) {
 #else
         glfwSwapInterval(0);
 #endif
-        glfwMakeContextCurrent(window);
+	glfwMakeContextCurrent(window);
+#ifdef _WIN32 || WIN32
         gladLoadGL(glfwGetProcAddress);
+#else
+        gladLoadGL();	    
+#end
         printf("%s%s\n", "GAME: USED OPENGL ", glGetString(GL_VERSION));
         loop(argc, &argv);
     }
