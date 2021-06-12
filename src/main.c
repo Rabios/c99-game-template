@@ -1,6 +1,6 @@
 // Written by Rabia Alhaffar in 29/December/2020
 // C99 game template ready for game development...
-// Updated: 5/Feburary/2021
+// Updated: 12/June/2021
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -11,6 +11,7 @@
 #define ANTIALIASING_SAMPLES 4          // Set antialiasing samples (If antialiasing enabled)
 #define EXIT_WITH_ESCAPE                // Allows to exit game with escape key
 #define WINDOW_RESIZABLE                // Allows window to be resizable
+#define DEBUGGING_ENABLED               // Enables debugging via logmsg function
 
 
 //////////////////////////////////////////////////////////////////////////////////////
@@ -140,6 +141,7 @@ void close(int argc, char** argv);       // When game closes
 //////////////////////////////////////////////////////////////////////////////////////
 // Utilities
 //////////////////////////////////////////////////////////////////////////////////////
+void logmsg(char* a1, char* a2, char* a3);
 void play_audio(char* src);
 void set_audio_volume(float volume);
 void set_audio_gain(float gain);
@@ -207,7 +209,7 @@ void start(int argc, char** argv) {
     // Networking Initialization (enet.h)
     //////////////////////////////////////////////////////////////////////////////////
     if (enet_initialize() == 0) {
-        printf("GAME: NETWORKING INITIALIZED SUCCESSFULLY!\n");
+        logmsg("GAME: NETWORKING INITIALIZED SUCCESSFULLY!\n", "", "");
     }
 
 
@@ -220,15 +222,16 @@ void start(int argc, char** argv) {
     //////////////////////////////////////////////////////////////////////////////////
     // Audio Initialization (miniaudio.h)
     //////////////////////////////////////////////////////////////////////////////////
-    printf("GAME: INITIALIZING AUDIO ENGINE...\n");
+    logmsg("GAME: INITIALIZING AUDIO ENGINE...\n", "", "");
 
     audio_engine_init_result = ma_engine_init(NULL, &audio_engine);
+    
     if (audio_engine_init_result != MA_SUCCESS) {
-        printf("GAME: AUDIO ENGINE INITIALIZATION FAILED!\n");
+        logmsg("GAME: AUDIO ENGINE INITIALIZATION FAILED!\n", "", "");
         return -1;
     }
 
-    printf("GAME: AUDIO ENGINE INITIALIZED SUCCESSFULLY!\n");
+    logmsg("GAME: AUDIO ENGINE INITIALIZED SUCCESSFULLY!\n", "", "");
 
 
     //////////////////////////////////////////////////////////////////////////////////
@@ -237,16 +240,17 @@ void start(int argc, char** argv) {
 #ifdef WINDOW_FULLSCREEN
     window_fullscreen = true;
 #endif
-    printf("GAME: STARTING...\n");
+    logmsg("GAME: STARTING...\n", "", "");
     glfwSetErrorCallback(error);
+    
     if (glfwInit()) {
         t1 = glfwGetTime();
         t2 = 0;
         dt = 0;
 
-        printf("GAME: CREATING DISPLAY WINDOW...\n");
+        logmsg("GAME: CREATING DISPLAY WINDOW...\n", "", "");
 #ifdef ANTIALIASING_ENABLED
-        printf("GAME: ANTIALIASING ENABLED!\n");
+        logmsg("GAME: ANTIALIASING ENABLED!\n", "", "");
         glfwWindowHint(GLFW_SAMPLES, ANTIALIASING_SAMPLES);
 #endif
 #ifdef __APPLE__
@@ -260,11 +264,12 @@ void start(int argc, char** argv) {
         glfwSetWindowAttrib(window, GLFW_RESIZABLE, GLFW_FALSE);
 #endif
         if (!window) {
-            printf("GAME: FAILED TO CREATE DISPLAY WINDOW!\n");
+            logmsg("GAME: FAILED TO CREATE DISPLAY WINDOW!\n", "", "");
             glfwTerminate();
             exit(error_code);
         }
-        printf("GAME: DISPLAY WINDOW CREATED SUCCESSFULLY!\n");
+        
+        logmsg("GAME: DISPLAY WINDOW CREATED SUCCESSFULLY!\n", "", "");
         glfwSetKeyCallback(window, keyboard);
         glfwSetMouseButtonCallback(window, mouse);
         glfwSetCursorPosCallback(window, cursor);
@@ -274,6 +279,7 @@ void start(int argc, char** argv) {
 #endif
         glfwGetWindowPos(window, &glfw_window_x, &glfw_window_y);
         glfwGetWindowSize(window, &glfw_window_width, &glfw_window_height);
+        
         for (int i = 0; i < 16; i++) {
             joysticks[i].index = i;
         }
@@ -288,11 +294,10 @@ void start(int argc, char** argv) {
 #else
         gladLoadGL();	    
 #endif
-        printf("%s%s\n", "GAME: USED OPENGL ", glGetString(GL_VERSION));
+        logmsg("%s%s\n", "GAME: USED OPENGL ", glGetString(GL_VERSION));
         loop(argc, &argv);
-    }
-    else {
-        printf("GAME: FAILED TO CREATE DISPLAY WINDOW!\n");
+    } else {
+        logmsg("GAME: FAILED TO CREATE DISPLAY WINDOW!\n", "", "");
         glfwTerminate();
         exit(error_code);
     }
@@ -329,14 +334,14 @@ void loop(int argc, char** argv) {
         dt = t2 - t1;
 
         if (dt >= (1.0 / game_fps)) {
-            printf("GAME: UPDATING...\n");
+            logmsg("GAME: UPDATING...\n", "", "");
             update(argc, &argv);
-            printf("GAME: RECEIEVING GAME INPUT...\n");
+            logmsg("GAME: RECEIEVING GAME INPUT...\n", "", "");
             input(argc, &argv);
             t1 = t2;
         }
 
-        printf("GAME: RENDERING...\n");
+        logmsg("GAME: RENDERING...\n", "", "");
         glViewport(0, 0, window_width, window_height);
         glMatrixMode(GL_MODELVIEW);
         glLoadIdentity();
@@ -348,14 +353,15 @@ void loop(int argc, char** argv) {
         glfwSwapBuffers(window);
         glfwPollEvents();
     }
-    printf("GAME: CLOSING DISPLAY WINDOW...\n");
+    
+    logmsg("GAME: CLOSING DISPLAY WINDOW...\n", "", "");
     close(argc, &argv);
     glfwDestroyWindow(window);
     glfwTerminate();
     ma_engine_uninit(&audio_engine);
     ClosePhysics();
     enet_deinitialize();
-    printf("GAME: CLOSED SUCCESSFULLY!\n");
+    logmsg("GAME: CLOSED SUCCESSFULLY!\n", "", "");
     exit(0);
 }
 
@@ -473,6 +479,12 @@ static void window_resize(GLFWwindow* window, int new_width, int new_height) {
 //////////////////////////////////////////////////////////////////////////////////////
 // Utilities
 //////////////////////////////////////////////////////////////////////////////////////
+void logmsg(char* a1, char* a2, char* a3) {
+#ifdef DEBUGGING_ENABLED
+    printf(a1, a2, a3);
+#endif
+}
+
 int charcode(char ch) {
     return (int)ch;
 }
@@ -503,11 +515,12 @@ void resume_audio(void) {
 
 
 void draw_texture(char* src, rect srcRec, rect dstRec, color tint) {
-    printf("GAME: LOADING TEXTURE %s\n", src);
+    logmsg("GAME: LOADING TEXTURE %s\n", src, "");
 	
     GLuint texture;
     int width, height, nrChannels;
     unsigned char* data = stbi_load(src, &width, &height, &nrChannels, STBI_rgb_alpha);
+    
     if (data) {
         glEnable(GL_TEXTURE_2D);
         glEnable(GL_BLEND);
@@ -551,16 +564,17 @@ void draw_texture(char* src, rect srcRec, rect dstRec, color tint) {
         glDisable(GL_TEXTURE_2D);
         glDisable(GL_BLEND);
 
-        printf("GAME: UNLOADING TEXTURE %s\n", src);
+        logmsg("GAME: UNLOADING TEXTURE %s\n", src, "");
         stbi_image_free(data);
     } else {
-        printf("GAME: FAILED TO LOAD TEXTURE %s!\n", src);
+        logmsg("GAME: FAILED TO LOAD TEXTURE %s!\n", src, "");
     }
 }
 
 
 void draw_text(spritefont font, char* text, float x, float y, float size, color tint) {
     size_t c = 0;
+    
     while (text[c] != "\0") {
         draw_texture(font.src, font.chars[(int)text[c]], (rect) { x, y, size, size }, tint);
         c++;
@@ -569,14 +583,16 @@ void draw_text(spritefont font, char* text, float x, float y, float size, color 
 
 
 void storage_init(void) {
-    printf("GAME: INITIALIZING STORAGE...\n");
+    logmsg("GAME: INITIALIZING STORAGE...\n", "", "");
+    
     if ((game_data = fopen("game.data", "r"))) {
         fclose(game_data);
     } else {
         game_data = fopen("game.data", "w");
         fclose(game_data);
     }
-    printf("GAME: STORAGE INITIALIZED SUCCESSFULLY!\n");
+    
+    logmsg("GAME: STORAGE INITIALIZED SUCCESSFULLY!\n", "", "");
 }
 
 
@@ -602,14 +618,16 @@ char* storage_load_string(unsigned int position) {
     char line[256] = { 0 };
     unsigned int line_count = 0;
     game_data = fopen("game.data", "r");
-    while (fgets(line, 256, game_data))
-    {
+    
+    while (fgets(line, 256, game_data)) {
         ++line_count;
+        
         if (line_count == position) {
             strcpy(loaded_variable_value, line);
             break;
         }
     }
+    
     fclose(game_data);
     strcpy(loaded_variable_value, line);
     return loaded_variable_value;
@@ -626,16 +644,17 @@ void storage_remove_var(unsigned int position) {
     FILE* temp_data;
     game_data = fopen("game.data", "r");
     temp_data = fopen("temp.data", "w");
-    while (!feof(game_data))
-    {
+    
+    while (!feof(game_data)) {
         strcpy(str, "\0");
         fgets(str, 256, game_data);
-        if (!feof(game_data))
-        {
+        
+        if (!feof(game_data)) {
             ctr++;
             if (ctr != position) fprintf(temp_data, str);
         }
     }
+    
     fclose(game_data);
     fclose(temp_data);
     storage_clear();
