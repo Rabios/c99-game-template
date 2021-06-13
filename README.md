@@ -38,6 +38,7 @@ These are current definitions available to use...
 #define EXIT_WITH_ESCAPE                // Allows to exit game with escape key
 #define WINDOW_RESIZABLE                // Allows window to be resizable
 #define WINDOW_FULLSCREEN               // Launch game in fullscreen mode
+#define DEBUGGING_ENABLED               // Enables debugging via logmsg function
 ```
 
 - You can also find "Game Properies" section in `main.c`
@@ -208,6 +209,7 @@ Utilities are functions provided in the template to simplify some parts...
 //////////////////////////////////////////////////////////////////////////////////////
 // Utilities
 //////////////////////////////////////////////////////////////////////////////////////
+void logmsg(char* a1, char* a2, char* a3);
 void play_audio(char* src);
 void set_audio_volume(float volume);
 void set_audio_gain(float gain);
